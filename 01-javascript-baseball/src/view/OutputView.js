@@ -9,6 +9,11 @@ class OutputView {
     Console.print('3개의 숫자를 모두 맞히셨습니다! 게임 종료');
   }
 
+  closeConsole() {
+    Console.print('게임 종료');
+    Console.close();
+  }
+
   printGameHint(gameHint) {
     let { ball: ball, strike: strike } = gameHint;
     this.checkGameHint(ball, strike);

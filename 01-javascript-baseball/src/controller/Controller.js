@@ -43,6 +43,7 @@ class Controller {
     this.#UserNum = userNum;
 
     this.getGameResult();
+    this.inputUserNum();
   }
 
   getGameResult() {
@@ -51,15 +52,22 @@ class Controller {
       this.#RandomNum
     );
     this.#OutputView.printGameHint(gameHint);
-    if (this.#BaseBallGame.IsGameOver === true) {
-      this.gameOver();
-      return;
-    }
-    this.inputUserNum();
+    if (this.#BaseBallGame.IsGameOver === true) this.gameOver();
   }
 
   gameOver() {
     this.#OutputView.printGameOver();
+    this.InputGameSelect();
+  }
+
+  InputGameSelect() {
+    this.#InputView.readGameSelect(this.getGameSelect.bind(this));
+  }
+
+  getGameSelect(selectNum) {
+    this.#Validator.checkUserSelect(selectNum);
+    if (selectNum === '1') this.startGame();
+    if (selectNum === '2') this.#OutputView.closeConsole();
   }
 }
 

@@ -9,6 +9,15 @@ class InputValidator {
     throw new Error('입력한 숫자가 올바르지 않습니다.');
   }
 
+  checkUserSelect(input) {
+    let userSelect = input.trim();
+    const checkNumLength = userSelect.length === 1;
+    const checkIsOneorTwo = /^[1-2]*$/g.test(userSelect);
+
+    if (checkNumLength && checkIsOneorTwo) return;
+    throw new Error('입력한 숫자가 올바르지 않습니다.');
+  }
+
   checkNumLength(input) {
     return input.length === 3;
   }
