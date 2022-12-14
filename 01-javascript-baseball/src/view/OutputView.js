@@ -5,6 +5,10 @@ class OutputView {
     Console.print('숫자 야구 게임을 시작합니다.');
   }
 
+  printGameOver() {
+    Console.print('3개의 숫자를 모두 맞히셨습니다! 게임 종료');
+  }
+
   printGameHint(gameHint) {
     let { ball: ball, strike: strike } = gameHint;
     this.checkGameHint(ball, strike);

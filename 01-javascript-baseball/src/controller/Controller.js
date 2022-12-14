@@ -51,7 +51,15 @@ class Controller {
       this.#RandomNum
     );
     this.#OutputView.printGameHint(gameHint);
+    if (this.#BaseBallGame.IsGameOver === true) {
+      this.gameOver();
+      return;
+    }
     this.inputUserNum();
+  }
+
+  gameOver() {
+    this.#OutputView.printGameOver();
   }
 }
 
