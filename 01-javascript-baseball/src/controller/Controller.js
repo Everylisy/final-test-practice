@@ -52,7 +52,7 @@ class Controller {
       this.#RandomNum
     );
     this.#OutputView.printGameHint(gameHint);
-    if (this.#BaseBallGame.IsGameOver === true) this.gameOver();
+    if (gameHint.strike === 3) this.gameOver();
   }
 
   gameOver() {

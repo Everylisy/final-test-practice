@@ -1,8 +1,4 @@
 class BaseballGame {
-  constructor() {
-    this.IsGameOver = false;
-  }
-
   baseballCounter(userNum, ComputerNum) {
     let strike = 0;
     let ball = 0;
@@ -10,8 +6,6 @@ class BaseballGame {
       if (curValue === ComputerNum[index]) strike += 1;
       else if (ComputerNum.includes(curValue)) ball += 1;
     });
-
-    if (strike === 3) this.IsGameOver = true;
 
     return {
       strike: strike,
