@@ -1,3 +1,4 @@
+const BaseballGame = require('../model/BaseballGame');
 const ComputerNum = require('../model/ComputerNum');
 const InputValidator = require('../utils/InputValidator');
 const InputView = require('../view/InputView');
@@ -7,15 +8,19 @@ class Controller {
   #ComputerNum;
   #InputView;
   #OutputView;
-  #RandomNum;
   #Validator;
+  #RandomNum;
+  #UserNum;
+  #BaseBallGame;
 
   constructor() {
     this.#ComputerNum = new ComputerNum();
     this.#InputView = new InputView();
     this.#OutputView = new OutputView();
-    this.#RandomNum;
     this.#Validator = new InputValidator();
+    this.#BaseBallGame = new BaseballGame();
+    this.#RandomNum;
+    this.#UserNum;
   }
 
   start() {
@@ -25,11 +30,28 @@ class Controller {
 
   startGame() {
     this.#RandomNum = this.#ComputerNum.getComputerNum();
+    console.log(this.#RandomNum);
+    this.inputUserNum();
+  }
+
+  inputUserNum() {
     this.#InputView.readUserNum(this.getUserNum.bind(this));
   }
 
   getUserNum(userNum) {
     this.#Validator.checkUserNum(userNum);
+    this.#UserNum = userNum;
+
+    this.getGameResult();
+  }
+
+  getGameResult() {
+    const gameHint = this.#BaseBallGame.baseballCounter(
+      this.#UserNum.split('').map(Number),
+      this.#RandomNum
+    );
+    this.#OutputView.printGameHint(gameHint);
+    this.inputUserNum();
   }
 }
 
