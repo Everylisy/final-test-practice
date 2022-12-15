@@ -1,3 +1,4 @@
+const Lotto = require('../Lotto');
 const LottoGame = require('../model/LottoGame');
 const LottoRandomNum = require('../model/LottoRandomNum');
 const InputValidator = require('../utils/InputValidator');
@@ -11,6 +12,7 @@ class Controller {
   #LottoGame;
   #LottoRandomNum;
   #RandomNums;
+  #winSplitNum;
 
   constructor() {
     this.#InputView = new InputView();
@@ -19,6 +21,7 @@ class Controller {
     this.#LottoGame = new LottoGame();
     this.#LottoRandomNum = new LottoRandomNum();
     this.#RandomNums;
+    this.#winSplitNum;
   }
 
   start() {
@@ -30,6 +33,17 @@ class Controller {
     const amount = this.#LottoGame.getAmount(buyAmount);
     this.#RandomNums = this.#LottoRandomNum.getRandomNum(amount);
     this.#OutputView.printLotto(amount, this.#RandomNums);
+    this.inputWinningNum();
+  }
+
+  inputWinningNum() {
+    this.#InputView.readWinningNum(this.getWinningNum.bind(this));
+  }
+
+  getWinningNum(winningNum) {
+    this.#winSplitNum = winningNum.split(',');
+    const lottoNumValid = new Lotto(this.#winSplitNum);
+    lottoNumValid.validate(this.#winSplitNum);
   }
 }
 
