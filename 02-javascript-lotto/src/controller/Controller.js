@@ -11,6 +11,7 @@ class Controller {
   #Validator;
   #LottoGame;
   #LottoRandomNum;
+  #Amount;
   #RandomNums;
   #winSplitNum;
 
@@ -20,6 +21,7 @@ class Controller {
     this.#Validator = new InputValidator();
     this.#LottoGame = new LottoGame();
     this.#LottoRandomNum = new LottoRandomNum();
+    this.#Amount;
     this.#RandomNums;
     this.#winSplitNum;
   }
@@ -30,9 +32,9 @@ class Controller {
 
   getLotto(buyAmount) {
     this.#Validator.validateBuyAmount(buyAmount);
-    const amount = this.#LottoGame.getAmount(buyAmount);
-    this.#RandomNums = this.#LottoRandomNum.getRandomNum(amount);
-    this.#OutputView.printLotto(amount, this.#RandomNums);
+    this.#Amount = this.#LottoGame.getAmount(buyAmount);
+    this.#RandomNums = this.#LottoRandomNum.getRandomNum(this.#Amount);
+    this.#OutputView.printLotto(this.#Amount, this.#RandomNums);
     this.inputWinningNum();
   }
 
@@ -53,6 +55,16 @@ class Controller {
 
   getBonusNum(bonusNum) {
     this.#Validator.validateBonusNum(bonusNum, this.#winSplitNum);
+    this.getLottoResult(bonusNum);
+  }
+
+  getLottoResult(bonusNum) {
+    const winStatus = this.#LottoGame.getSameNum(
+      this.#RandomNums,
+      this.#winSplitNum.map(Number),
+      bonusNum
+    );
+    this.#OutputView.printWinStatus(winStatus, this.#Amount);
   }
 }
 
