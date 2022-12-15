@@ -44,6 +44,15 @@ class Controller {
     this.#winSplitNum = winningNum.split(',');
     const lottoNumValid = new Lotto(this.#winSplitNum);
     lottoNumValid.validate(this.#winSplitNum);
+    this.inputBonusNum();
+  }
+
+  inputBonusNum() {
+    this.#InputView.readBonusNum(this.getBonusNum.bind(this));
+  }
+
+  getBonusNum(bonusNum) {
+    this.#Validator.validateBonusNum(bonusNum, this.#winSplitNum);
   }
 }
 
