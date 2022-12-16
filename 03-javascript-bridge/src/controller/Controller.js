@@ -9,13 +9,17 @@ class Controller {
   #bridgeWay;
   #userMove;
   #BridgeGame;
+  #movingResult;
   #tryAttempts;
+  #isSuccess;
 
   constructor() {
     this.#bridgeWay;
     this.#userMove = [];
     this.#BridgeGame = new BridgeGame();
+    this.#movingResult;
     this.#tryAttempts = 1;
+    this.#isSuccess = false;
   }
 
   start() {
@@ -58,13 +62,13 @@ class Controller {
 
   getMovingResult(bridgeWay, userMove) {
     const [bridgeSize, userMoveSize] = [bridgeWay.length, userMove.length];
-    const movingResult = this.#BridgeGame.move(
+    this.#movingResult = this.#BridgeGame.move(
       bridgeWay,
       userMove,
       userMoveSize
     );
-    OutputView.printMap(movingResult);
-    this.checkGameOver(movingResult, bridgeSize, userMoveSize);
+    OutputView.printMap(this.#movingResult);
+    this.checkGameOver(this.#movingResult, bridgeSize, userMoveSize);
   }
 
   checkGameOver(result, bridgeSize, userMoveSize) {
@@ -73,7 +77,10 @@ class Controller {
       return;
     }
     if (userMoveSize < bridgeSize) this.inputUserMoving();
-    if (userMoveSize === bridgeSize) return;
+    if (userMoveSize === bridgeSize) {
+      this.#isSuccess = true;
+      this.printGameResult();
+    }
   }
 
   inputGameCommand() {
@@ -95,10 +102,16 @@ class Controller {
         (this.#userMove = []),
         (this.#tryAttempts += 1),
         this.inputUserMoving())
-      : null;
+      : this.printGameResult();
   }
 
-  printGameResult() {}
+  printGameResult() {
+    OutputView.printResult(
+      this.#movingResult,
+      this.#isSuccess,
+      this.#tryAttempts
+    );
+  }
 }
 
 module.exports = Controller;
