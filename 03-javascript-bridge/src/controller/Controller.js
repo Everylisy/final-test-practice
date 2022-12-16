@@ -9,11 +9,13 @@ class Controller {
   #bridgeWay;
   #userMove;
   #BridgeGame;
+  #tryAttempts;
 
   constructor() {
     this.#bridgeWay;
     this.#userMove = [];
     this.#BridgeGame = new BridgeGame();
+    this.#tryAttempts = 1;
   }
 
   start() {
@@ -67,10 +69,23 @@ class Controller {
 
   checkGameOver(result, bridgeSize, userMoveSize) {
     if (result.isGameOver) {
+      this.inputGameCommand();
       return;
     }
     if (userMoveSize < bridgeSize) this.inputUserMoving();
     if (userMoveSize === bridgeSize) return;
+  }
+
+  inputGameCommand() {
+    InputView.readGameCommand(this.getGameCommand.bind(this));
+  }
+
+  getGameCommand(command) {
+    try {
+      validator.checkGameOverSelect(command);
+    } catch {
+      this.inputGameCommand();
+    }
   }
 }
 
