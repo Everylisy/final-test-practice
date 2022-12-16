@@ -1,7 +1,14 @@
-const InputView = {
-  readBridgeSize() {},
+const { Console } = require('@woowacourse/mission-utils');
+const { INPUT_MESSAGE } = require('../utils/gameMessage');
 
-  readMoving() {},
+const InputView = {
+  readBridgeSize(callback) {
+    Console.readLine(INPUT_MESSAGE.GET_BRIDGE_LENGTH, callback);
+  },
+
+  readMoving(callback) {
+    Console.readLine(INPUT_MESSAGE.SELECT_MOVE, callback);
+  },
 
   readGameCommand() {},
 };
