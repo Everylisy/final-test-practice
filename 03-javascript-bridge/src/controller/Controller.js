@@ -83,10 +83,22 @@ class Controller {
   getGameCommand(command) {
     try {
       validator.checkGameOverSelect(command);
+      this.checkGameCommand(command);
     } catch {
       this.inputGameCommand();
     }
   }
+
+  checkGameCommand(command) {
+    command === 'R'
+      ? (this.#BridgeGame.retry(),
+        (this.#userMove = []),
+        (this.#tryAttempts += 1),
+        this.inputUserMoving())
+      : null;
+  }
+
+  printGameResult() {}
 }
 
 module.exports = Controller;
